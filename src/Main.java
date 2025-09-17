@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Списки с данными
         List<Product> products = new ArrayList<>();
         products.add(new Product(1, "Phone", 500.0, 1));
         products.add(new Product(2, "Laptop", 1000.0, 1));
@@ -14,24 +14,41 @@ public class Main {
         manufacturers.add(new Manufacturer(2, "LG"));
 
         List<Order> orders = new ArrayList<>();
-        orders.add(new Order(1, 1, 2, 1000.0)); // 2 телефона по 500 = 1000
-        orders.add(new Order(2, 2, 1, 1000.0)); // 1 ноутбук
-        orders.add(new Order(3, 3, 1, 800.0));  // 1 TV
+        orders.add(new Order(1, 1, 2, 1000.0));
+        orders.add(new Order(2, 2, 1, 1000.0));
+        orders.add(new Order(3, 3, 1, 800.0));
 
-        // Поиск по производителю
-        System.out.println("Товары от Samsung:");
-        for (Product p : products) {
-            if (p.getManufacturerId() == 1) {
-                System.out.println(p.getName() + " - $" + p.getPrice());
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nМагазин электроники");
+            System.out.println("1. Поиск товаров по производителю");
+            System.out.println("2. Фильтрация заказов по сумме");
+            System.out.println("3. Выход");
+            System.out.print("Выберите действие: ");
+            int choice = scanner.nextInt();
+
+            if (choice == 1) {
+                System.out.print("Введите ID производителя (1 - Samsung, 2 - LG): ");
+                int manufacturerId = scanner.nextInt();
+                System.out.println("Товары от производителя:");
+                for (Product p : products) {
+                    if (p.getManufacturerId() == manufacturerId) {
+                        System.out.println(p.getName() + " - $" + p.getPrice());
+                    }
+                }
+            } else if (choice == 2) {
+                System.out.print("Введите минимальную сумму заказа: ");
+                double minAmount = scanner.nextDouble();
+                System.out.println("Заказы дороже $" + minAmount + ":");
+                for (Order o : orders) {
+                    if (o.getTotalAmount() > minAmount) {
+                        System.out.println("Заказ #" + o.getId() + ": $" + o.getTotalAmount());
+                    }
+                }
+            } else if (choice == 3) {
+                break;
             }
         }
-
-        // Фильтрация по сумме заказа от 900
-        System.out.println("\nЗаказы дороже $900:");
-        for (Order o : orders) {
-            if (o.getTotalAmount() > 900) {
-                System.out.println("Заказ #" + o.getId() + ": $" + o.getTotalAmount());
-            }
-        }
+        scanner.close();
     }
 }
