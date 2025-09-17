@@ -20,7 +20,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("\nМагазин электроники");
+            System.out.println("\nМагазин электроники(основная ветка)");
             System.out.println("1. Поиск товаров по производителю");
             System.out.println("2. Фильтрация заказов по сумме");
             System.out.println("3. Выход");
